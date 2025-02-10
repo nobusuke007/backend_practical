@@ -65,5 +65,5 @@ jobs:
         with:
           app-name: 'tech0-gen-9-step3-1-py-17'
           slot-name: 'Production'
-          package: "./backend"  # ここを修正
+          package: .  # すべてのパッケージをインストールする設定に変更
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_ACDFD53A83BB40ED88FCBEC4D3EA24B1 }}
