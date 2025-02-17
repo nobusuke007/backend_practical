@@ -7,12 +7,12 @@ import json
 from db_control import crud, mymodels_MySQL
 from dotenv import load_dotenv
 
-# 環境変数の読み込み
-load_dotenv()
-
-# MySQLのテーブル作成
-# from db_control.create_tables import init_db
-# init_db()
+# 開発環境の場合のみ.envファイルを読み込む
+if os.path.exists(".env"):
+    load_dotenv()
+else:
+    # Azureの環境変数が利用可能であることをログに記録
+    print("Running in Azure environment, using system environment variables")
 
 class Customer(BaseModel):
     customer_id: str
@@ -28,7 +28,8 @@ app.add_middleware(
     allow_origins=[
         "http://localhost:3000",
         "http://127.0.0.1:3000",
-        "https://tech0-gen-9-step3-1-py-17.azurewebsites.net"  # Azure Web Appのドメインを追加
+        "https://tech0-gen-9-step3-1-py-17.azurewebsites.net",  # Azure Web Appのドメイン
+        os.getenv("ALLOWED_ORIGINS", "").split(",")  # 環境変数から追加のオリジンを読み込む
     ],
     allow_credentials=True,
     allow_methods=["*"],
